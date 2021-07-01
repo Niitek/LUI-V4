@@ -169,7 +169,7 @@ function module:CreateSearchBar(container)
 	search:SetText(searchText)
 
 	-- Search Editbox
-	local editbox = CreateFrame("EditBox", nil, container)
+	local editbox = CreateFrame("EditBox", nil, container,BackdropTemplateMixin and "BackdropTemplate")
 	module:RefreshFontString(editbox, "Bags")
 	
 	editbox:SetHeight(32)
@@ -191,7 +191,7 @@ function module:CreateSearchBar(container)
 	end)
 
 	-- Editbox ClearButton
-	local clear = CreateFrame("Button", nil, editbox)
+	local clear = CreateFrame("Button", nil, editbox, BackdropTemplateMixin and "BackdropTemplate")
 	clear:SetPoint("LEFT", search, "LEFT", 0, 0)
 	clear:SetSize(24, 24)
 	clear:Hide()
@@ -201,7 +201,7 @@ function module:CreateSearchBar(container)
 	texture:SetAllPoints(clear)
 	
 	-- Search Button, not visible but to show the editbox
-	local button = CreateFrame("Button", nil, container)
+	local button = CreateFrame("Button", nil, container, BackdropTemplateMixin and "BackdropTemplate")
 	button:EnableMouse(1)
 	button:RegisterForClicks("LeftButtonUp", "RightButtonUp")
 	button:SetAllPoints(search)

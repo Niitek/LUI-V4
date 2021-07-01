@@ -12,6 +12,10 @@ LUI:SetDefaultModuleLibraries("AceEvent-3.0")
 local L = LUI.L
 local db
 
+LUI.IsRetail = (_G.WOW_PROJECT_ID == _G.WOW_PROJECT_MAINLINE)
+LUI.IsBCC = (_G.WOW_PROJECT_ID == _G.WOW_PROJECT_BURNING_CRUSADE_CLASSIC)
+LUI.IsClassic = (_G.WOW_PROJECT_ID == _G.WOW_PROJECT_CLASSIC)
+
 --For Testing Purposes Only
 _G["LUI"] = LUI
 local Media = LibStub("LibSharedMedia-3.0")

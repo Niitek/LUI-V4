@@ -16,7 +16,7 @@ ExperienceDataMixin.BAR_EVENTS = {
 }
 
 function ExperienceDataMixin:ShouldBeVisible()
-    if IsXPUserDisabled() then
+    if IsRetail and IsXPUserDisabled() or UnitLevel('player')~=70 then
         return false
     end
 

@@ -133,13 +133,17 @@ local function GetLocalizedDifficulty(difficulty)
 	return L[LString], COLOR_CODES[diff]
 end
 
-function element:UpdateInvites()
-	invitesPending = (GameTimeFrame and GameTimeFrame.pendingCalendarInvites > 0) and true or false
+if LUI.IsRetail then
+	function element:UpdateInvites()
+		invitesPending = (GameTimeFrame and GameTimeFrame.pendingCalendarInvites > 0) and true or false
+	end
 end
 
-function element:UpdateGuildParty()
-	--local TAG_GUILD_GROUP = " |cff66c7ffG|r"
-	guildParty = InGuildParty() and format(" %s%s|r", COLOR_CODES.Guild, L["InfoClock_Instance_Guild"]) or nil
+if LUI.IsRetail then
+	function element:UpdateGuildParty()
+		--local TAG_GUILD_GROUP = " |cff66c7ffG|r"
+		guildParty = InGuildParty() and format(" %s%s|r", COLOR_CODES.Guild, L["InfoClock_Instance_Guild"]) or nil
+	end
 end
 
 function element:UpdateInstanceInfo()
@@ -258,11 +262,11 @@ end
 
 function element:OnCreate()
 	-- Update tags that can be found next to the clock.
-	element:RegisterEvent("GUILD_PARTY_STATE_UPDATED", "UpdateGuildParty")
-	element:RegisterEvent("PLAYER_DIFFICULTY_CHANGED", "UpdateInstanceInfo")
+	if LUI.IsRetail then element:RegisterEvent("GUILD_PARTY_STATE_UPDATED", "UpdateGuildParty") end
+	if LUI.IsRetail then element:RegisterEvent("PLAYER_DIFFICULTY_CHANGED", "UpdateInstanceInfo") end
 	element:RegisterEvent("INSTANCE_GROUP_SIZE_CHANGED", "UpdateInstanceInfo")
 	element:RegisterEvent("PLAYER_ENTERING_WORLD", "UpdateInstanceInfo")
-	element:UpdateGuildParty()
+	if LUI.IsRetail then element:UpdateGuildParty() end
 	element:UpdateInstanceInfo()
 
 	-- Update cached CVar data.
@@ -270,9 +274,11 @@ function element:OnCreate()
 	element:SecureHookScript(TimeManagerLocalTimeCheck, "OnClick", "UpdateCVar")
 	element:UpdateCVar()
 
-	-- Update calendar invites
-	element:RegisterEvent("CALENDAR_UPDATE_PENDING_INVITES", "UpdateInvites")
-	element:UpdateInvites()
+	if LUI.IsRetail then
+		-- Update calendar invites
+		element:RegisterEvent("CALENDAR_UPDATE_PENDING_INVITES", "UpdateInvites")
+		element:UpdateInvites()
+	end
 
 	element:AddUpdate("UpdateClock", CLOCK_UPDATE_TIME)
 end

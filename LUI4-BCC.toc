@@ -1,4 +1,4 @@
-## Interface: 80300
+## Interface: 20501
 ## Version: 4.0
 ## Title: LUI4
 ## Author: Siku
@@ -48,8 +48,8 @@ api\compat.lua
 modules\tooltip\tooltip.lua
 
 # Load UI Elements
-modules\uielements\uielements.lua
-modules\uielements\colorpicker.lua
+# modules\uielements\uielements.lua
+# modules\uielements\colorpicker.lua
 
 # Load Micromenu
 modules\micromenu\micromenu.lua
@@ -74,18 +74,18 @@ modules\unitframes\style.lua
 modules\unitframes\class.lua
 
 # Load Bags
-# modules\bags\container.lua
-# modules\bags\templates.lua
-# modules\bags\bags.lua
-# modules\bags\bank.lua
-# modules\bags\reagents.lua
+modules\bags\container.lua
+modules\bags\templates.lua
+modules\bags\bags.lua
+modules\bags\bank.lua
+modules\bags\reagents.lua
 
 # Load InfoBars
 modules\infobars\infobars.lua
 modules\infobars\experience.lua
-modules\infobars\reputation.lua
-modules\infobars\honor.lua
-modules\infobars\azerite.lua
+# modules\infobars\reputation.lua
+# modules\infobars\honor.lua
+# modules\infobars\azerite.lua
 
 # Load Infotext
 modules\infotext\infotext.lua
@@ -95,8 +95,8 @@ modules\infotext\memory.lua
 modules\infotext\fps.lua
 modules\infotext\bags.lua
 modules\infotext\clock.lua
-modules\infotext\currency.lua
-modules\infotext\dualspec.lua
+# modules\infotext\currency.lua
+# modules\infotext\dualspec.lua
 modules\infotext\gold.lua
 modules\infotext\guild.lua
 modules\infotext\friends.lua

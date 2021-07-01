@@ -210,7 +210,7 @@ function ContainerMixin:NewBagInfo(id)
 	if self.bagList[id] then return self.bagList[id] end
 
 	--Create the frame
-	local bagFrame = CreateFrame("Frame", self:GetName()..id, self)
+	local bagFrame = CreateFrame("Frame", self:GetName()..id, self, BackdropTemplateMixin and "BackdropTemplate")
 	bagFrame:SetID(id)
 
 	return bagFrame
@@ -556,11 +556,11 @@ function ToolbarMixin:SetButtonTooltip(button, text)
 end
 
 function ContainerMixin:CreateToolBar(name)
-	local toolBar = CreateFrame("Frame", nil, self)
+	local toolBar = CreateFrame("Frame", nil, self, BackdropTemplateMixin and "BackdropTemplate")
 	toolBar:SetClampedToScreen(true)
 	toolBar:SetSize(1,1)
 
-	local bgFrame = CreateFrame("Frame", nil, toolBar)
+	local bgFrame = CreateFrame("Frame", nil, toolBar, BackdropTemplateMixin and "BackdropTemplate")
 	--Force it to the lowest frame level to prevent layering issues
 	bgFrame:SetFrameLevel(toolBar:GetParent():GetFrameLevel())
 	bgFrame:SetClampedToScreen(true)
@@ -618,7 +618,7 @@ function module:CreateNewContainer(name, obj)
 	if containerStorage[name] then return end
 
 	-- Create the frame and set properties
-	local frame = CreateFrame("Frame", "LUI"..name, UIParent)
+	local frame = CreateFrame("Frame", "LUI"..name, UIParent, BackdropTemplateMixin and "BackdropTemplate")
 	frame:SetFrameStrata("HIGH")
 	frame:EnableMouse(true)
 	frame:SetMovable(true)
@@ -627,7 +627,7 @@ function module:CreateNewContainer(name, obj)
 	frame:SetSize(1,1)
 
 	-- Background frame
-	local bgFrame = CreateFrame("Frame", nil, frame)
+	local bgFrame = CreateFrame("Frame", nil, frame,BackdropTemplateMixin and "BackdropTemplate")
 	-- TODO: When Bags and Bank are opened at the same time, there is overlap happening. FIgure a better way to fix it.
 	bgFrame:SetFrameLevel(frame:GetParent():GetFrameLevel()+1)
 	bgFrame:SetClampedToScreen(true)
@@ -756,6 +756,7 @@ function module:Refresh()
 
 				for i = 1, #toolbar.slotList do
 				local slot = toolbar.slotList[i]
+					Mixin(slot, BackdropTemplateMixin)
 					slot:SetBackdrop(module.itemBackdrop)
 				end
 			end
@@ -771,6 +772,7 @@ function module:RefreshBackdrops()
 	local db = module.db.profile.Textures
 	-- Bag Backdrop
 	module.bagBackdrop = {
+		-- Mixin(name, BackdropTemplate)
 		bgFile = Media:Fetch("background", db.BackgroundTex),
 		edgeFile = Media:Fetch("border", db.BorderTex),
 		edgeSize = 15, insets = { left = 3, right = 3, top = 3, bottom = 3 }

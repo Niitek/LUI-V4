@@ -229,12 +229,13 @@ function module:SetMainBar()
 	anchor:RegisterEvent("ZONE_CHANGED_NEW_AREA");
 	anchor:RegisterUnitEvent("UNIT_LEVEL", "player")
 	anchor:SetScript("OnEvent", function() module:UpdateMainBarVisibility() end)
-	module:SecureHook(StatusTrackingBarManager, "UpdateBarsShown", "UpdateMainBarVisibility")
-
+	if IsRetail then
+		module:SecureHook(StatusTrackingBarManager, "UpdateBarsShown", "UpdateMainBarVisibility")
+	end
 	local expBar = module:CreateBar("LUI_InfoBarsExp", "Experience")
-	local repBar = module:CreateBar("LUI_InfoBarsRep", "Reputation")
-	local honorBar = module:CreateBar("LUI_InfoBarsHonor", "Honor")
-	local azeriteBar = module:CreateBar("LUI_InfoBarsAzerite", "Azerite")
+	-- local repBar = module:CreateBar("LUI_InfoBarsRep", "Reputation")
+	-- local honorBar = module:CreateBar("LUI_InfoBarsHonor", "Honor")
+	-- local azeriteBar = module:CreateBar("LUI_InfoBarsAzerite", "Azerite")
 	mainBarList = {expBar, repBar, honorBar, azeriteBar}
 
 	for bar in module:IterateMainBars() do
@@ -244,8 +245,8 @@ function module:SetMainBar()
 	module.anchor = anchor
 	module.ExpBar = expBar
 	module.RepBar = repBar
-	module.HonorBar = honorBar
-	module.AzeriteBar = azeriteBar
+	-- module.HonorBar = honorBar
+	-- module.AzeriteBar = azeriteBar
 	mainBarsCreated = true
 end
 
@@ -254,9 +255,9 @@ function module:UpdateMainBarVisibility()
 
 	-- Check which bars can be visible at the moment
 	local expShown = module.ExpBar:ShouldBeVisible()
-	local repShown = module.RepBar:ShouldBeVisible()
-	local honorShown = module.HonorBar:ShouldBeVisible()
-	local apShown = module.AzeriteBar:ShouldBeVisible()
+	-- local repShown = module.RepBar:ShouldBeVisible()
+	-- local honorShown = module.HonorBar:ShouldBeVisible()
+	-- local apShown = module.AzeriteBar:ShouldBeVisible()
 	
 	-- Decide which bars should be ultimately shown.
 	if expShown then

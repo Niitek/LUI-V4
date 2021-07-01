@@ -8,6 +8,10 @@ end
 local oUF = ns.oUF
 local Private = oUF.Private
 
+oUF.IsRetail = (_G.WOW_PROJECT_ID == _G.WOW_PROJECT_MAINLINE)
+oUF.IsBCC = (_G.WOW_PROJECT_ID == _G.WOW_PROJECT_BURNING_CRUSADE_CLASSIC)
+oUF.IsClassic = (_G.WOW_PROJECT_ID == _G.WOW_PROJECT_CLASSIC)
+
 local argcheck = Private.argcheck
 local error = Private.error
 local print = Private.print

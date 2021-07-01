@@ -159,22 +159,23 @@ function module:SetHealth(frame)
 	healthBG.multiplier = 0.4
 
 	-- Testing Absorb
-	local absorbBar = CreateFrame('StatusBar', nil, health)
-	absorbBar:SetPoint('TOP')
-	absorbBar:SetPoint('BOTTOM')
-	absorbBar:SetPoint('LEFT', health:GetStatusBarTexture(), 'RIGHT')
-	absorbBar:SetWidth(health:GetWidth())
-	absorbBar:SetStatusBarTexture(Media:Fetch("statusbar", db.Texture))
-	absorbBar:SetAlpha(.6)
+	if IsRetail then
+		local absorbBar = CreateFrame('StatusBar', nil, health)
+		absorbBar:SetPoint('TOP')
+		absorbBar:SetPoint('BOTTOM')
+		absorbBar:SetPoint('LEFT', health:GetStatusBarTexture(), 'RIGHT')
+		absorbBar:SetWidth(health:GetWidth())
+		absorbBar:SetStatusBarTexture(Media:Fetch("statusbar", db.Texture))
+		absorbBar:SetAlpha(.6)
 
-	local overAbsorbBar = CreateFrame('StatusBar', nil, health)
-	overAbsorbBar:SetPoint('TOP')
-	overAbsorbBar:SetPoint('BOTTOM')
-	overAbsorbBar:SetPoint('LEFT', health:GetStatusBarTexture(), 'LEFT')
-	overAbsorbBar:SetWidth(health:GetWidth())
-	overAbsorbBar:SetStatusBarTexture(Media:Fetch("statusbar", db.Texture))
-	overAbsorbBar:SetAlpha(.6)
-
+		local overAbsorbBar = CreateFrame('StatusBar', nil, health)
+		overAbsorbBar:SetPoint('TOP')
+		overAbsorbBar:SetPoint('BOTTOM')
+		overAbsorbBar:SetPoint('LEFT', health:GetStatusBarTexture(), 'LEFT')
+		overAbsorbBar:SetWidth(health:GetWidth())
+		overAbsorbBar:SetStatusBarTexture(Media:Fetch("statusbar", db.Texture))
+		overAbsorbBar:SetAlpha(.6)
+	end
 	-- Health Text
 	local healthText = module:SetTextElement(frame, "HealthText", health)
 	local healthPercent = module:SetTextElement(frame, "HealthPercent", health)
@@ -196,7 +197,7 @@ function module:SetHealth(frame)
 	function predictionGroup:PostUpdate(unit, myIncomingHeal_, otherIncomingHeal_, absorb,
 										healAbsorb_, hasOverAbsorb, hasOverHealAbsorb_)
 		-- By default, oUF overAbsorb is a texture, so we have to handle statusbar ourselves.
-		if hasOverAbsorb then
+		if hasOverAbsorb and IsRetail then
 			local health_, maxHealth = UnitHealth(unit), UnitHealthMax(unit)
 			local totalAbsorb = UnitGetTotalAbsorbs(unit) or 0
 			local overAbsorb = totalAbsorb - absorb
@@ -205,13 +206,17 @@ function module:SetHealth(frame)
 			self.overAbsorb:Show()
 		end
 	end
-
-	frame:RegisterEvent('UNIT_ABSORB_AMOUNT_CHANGED', frame.UpdateAllElements)
-
+	if IsRetail then
+		frame:RegisterEvent('UNIT_ABSORB_AMOUNT_CHANGED', frame.UpdateAllElements)
+	end
 	--Register those with oUF
 	frame.Health = health
 	frame.Health.bg = healthBG
-	frame:Tag(healthText, '[dead][offline][LUI:health] [LUI:Absorb]')
+	if IsRetail then
+		frame:Tag(healthText, '[dead][offline][LUI:health] [LUI:Absorb]')
+	else
+		frame:Tag(healthText, '[dead][offline][LUI:health]')
+	end
 	frame.Health.value = healthText
 
 	frame.HealthPrediction = predictionGroup

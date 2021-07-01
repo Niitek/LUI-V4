@@ -89,43 +89,47 @@ function Bags:CreateTitleBar()
 	gold:SetFont(Media:Fetch("font", db.Bags.Name), db.Bags.Size, db.Bags.Flag)
 
 	-- Watched Currency Display, next to gold
-	local currency = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightLarge")
-	currency:SetJustifyH("RIGHT")
-	currency:SetPoint("RIGHT", gold, "LEFT", -10, 0)
-	currency:SetText(self:GetCurrencyString())
-	currency:SetFont(Media:Fetch("font", db.Bags.Name), db.Bags.Size, db.Bags.Flag)
-
+	-- if IsRetail then
+		local currency = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightLarge")
+		currency:SetJustifyH("RIGHT")
+		currency:SetPoint("RIGHT", gold, "LEFT", -10, 0)
+		currency:SetText(self:GetCurrencyString())
+		currency:SetFont(Media:Fetch("font", db.Bags.Name), db.Bags.Size, db.Bags.Flag)
+	-- end
 	--Hooking this function allows to update watched currencies without a ReloadUI
 	local updateFunc = function() self:UpdateCurrencies() end
-	module:SecureHook(BACKPACK_TOKEN_UPDATE_FUNC, updateFunc)
+	if IsRetail then module:SecureHook(BACKPACK_TOKEN_UPDATE_FUNC, updateFunc) end
 	self:SetScript("OnEvent", updateFunc)
 	self:RegisterEvent("PLAYER_MONEY")
 	self:RegisterEvent("PLAYER_LOGIN")
 	self:RegisterEvent("PLAYER_TRADE_MONEY")
 	self:RegisterEvent("TRADE_MONEY_CHANGED")
 	self:RegisterEvent("CURRENCY_DISPLAY_UPDATE")
-	self:RegisterEvent("PLAYER_TRADE_CURRENCY")
-	self:RegisterEvent("TRADE_CURRENCY_CHANGED")
-
-	self.gold = gold
-	self.currency = currency
-end
-
-local currencyString = {}
-function Bags:GetCurrencyString()
-	wipe(currencyString)
-	for i = 1, MAX_WATCHED_TOKENS do
-		local name, count, icon = GetBackpackCurrencyInfo(i)
-		if name then
-			currencyString[i] = format(CURRENCY_FORMAT,count,icon)
-		end
+	if IsRetail then
+		self:RegisterEvent("PLAYER_TRADE_CURRENCY")
+		self:RegisterEvent("TRADE_CURRENCY_CHANGED")
 	end
-	return table.concat(currencyString, "  ")
+	self.gold = gold
+	if IsRetail then self.currency = currency end
 end
-
+-- if IsRetail then
+	local currencyString = {}
+	function Bags:GetCurrencyString()
+		wipe(currencyString)
+		if IsRetail then
+		for i = 1, MAX_WATCHED_TOKENS do
+			local name, count, icon = GetBackpackCurrencyInfo(i)
+			if name then
+				currencyString[i] = format(CURRENCY_FORMAT,count,icon)
+			end
+		end
+		end
+		return table.concat(currencyString, "  ")
+	end
+-- end
 function Bags:UpdateCurrencies()
 	self.gold:SetText(GetMoneyString(GetMoney()))
-	self.currency:SetText(self:GetCurrencyString())
+	if IsRetail then self.currency:SetText(self:GetCurrencyString()) end
 end
 
 -- ####################################################################################################################

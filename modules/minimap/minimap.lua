@@ -334,10 +334,12 @@ function module:SetMinimapFrames()
 		minimapTex:SetBackdropBorderColor(0,0,0,1)
 	end
 
+	if LUI.IsRetail then
 	-- Move Garrison icon
-	GarrisonLandingPageMinimapButton:ClearAllPoints();
-	GarrisonLandingPageMinimapButton:SetSize(32,32);
-	GarrisonLandingPageMinimapButton:SetPoint(ICON_LOCATION.Mail, Minimap, 3, 12)
+		GarrisonLandingPageMinimapButton:ClearAllPoints();
+		GarrisonLandingPageMinimapButton:SetSize(32,32);
+		GarrisonLandingPageMinimapButton:SetPoint(ICON_LOCATION.Mail, Minimap, 3, 12)
+	end
 
 	MiniMapMailFrame:HookScript("OnShow", function(self)
 		GarrisonLandingPageMinimapButton:SetPoint("BOTTOMLEFT", MiniMapMailFrame, "TOPLEFT", 0, -4)

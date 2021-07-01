@@ -122,7 +122,13 @@ colors.power.ALTERNATE = {0.7, 0.7, 0.6}
 colors.power[10] = colors.power.ALTERNATE
 
 for i = 0, 3 do
+	if oUF.IsRetail then
 	colors.threat[i] = {GetThreatStatusColor(i)}
+	else
+	local statustarget = UnitThreatSituation("player", "target")
+	local threatsituation = UnitThreatSituation("player")
+	-- colors.threat[i] = {threatsituation(i)}  --need to fix for classic compat.
+end
 end
 
 local function colorsAndPercent(a, b, ...)

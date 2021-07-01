@@ -80,7 +80,7 @@ A default texture will be applied to the Texture widgets if they don't have a te
 
 local _, ns = ...
 local oUF = ns.oUF
-
+if IsRetail then
 local function Update(self, event, unit)
 	if(self.unit ~= unit) then return end
 
@@ -303,3 +303,4 @@ local function Disable(self)
 end
 
 oUF:AddElement('HealthPrediction', Path, Enable, Disable)
+end

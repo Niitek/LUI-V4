@@ -28,7 +28,7 @@ This element updates by changing the texture.
 
 local _, ns = ...
 local oUF = ns.oUF
-
+if oUF.IsRetail then
 -- sourced from FrameXML/CompactUnitFrame.lua
 local ICONS = {
 	[Enum.PvPUnitClassification.FlagCarrierHorde or 0] = "nameplates-icon-flag-horde",
@@ -117,3 +117,5 @@ local function Disable(self)
 end
 
 oUF:AddElement('PvPClassificationIndicator', Path, Enable, Disable)
+
+end

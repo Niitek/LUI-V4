@@ -5,7 +5,7 @@
 -- ####################################################################################################################
 
 local _, LUI = ...
-local module = LUI:GetModule("UI Elements")
+if LUI.IsRetail then local module = LUI:GetModule("UI Elements") end
 local element = module:NewModule("ColorPicker", "AceHook-3.0")
 
 --Element Variables

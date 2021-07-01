@@ -64,11 +64,13 @@ oUF.Tags.Methods['LUI:health'] = function(unit)
 	if(not UnitIsConnected(unit) or UnitIsDead(unit) or UnitIsGhost(unit)) then return end
 	return ShortValue(UnitHealth(unit))
 end
-oUF.Tags.Methods['LUI:Absorb'] = function(unit)
-	if(not UnitIsConnected(unit) or UnitIsDead(unit) or UnitIsGhost(unit)) then return end
-	local totalAbsorb = UnitGetTotalAbsorbs(unit)
-	if totalAbsorb < 1 then return end
-	return format("(+%s)",ShortValue(totalAbsorb))
+if IsRetail then
+	oUF.Tags.Methods['LUI:Absorb'] = function(unit)
+		if(not UnitIsConnected(unit) or UnitIsDead(unit) or UnitIsGhost(unit)) then return end
+		local totalAbsorb = UnitGetTotalAbsorbs(unit)
+		if totalAbsorb < 1 then return end
+		return format("(+%s)",ShortValue(totalAbsorb))
+	end
 end
 oUF.Tags.Methods['ClassColor'] = function(unit)
 	local _, class = UnitClass(unit)

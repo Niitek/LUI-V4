@@ -208,7 +208,7 @@ function LUI:ForceTooltipUpdate(ttip)
 end
 
 function module:GetUnitColor(unit)
-	if UnitIsPlayer(unit) and not UnitHasVehicleUI(unit) then
+	if UnitIsPlayer(unit) or IsRetail and not UnitHasVehicleUI(unit) then
 		local _, class = UnitClass(unit)
 		return module:RGB(class)
 	else
